@@ -26,7 +26,7 @@ public function render()
 }
 
 
-private function ClearFields(){
+public function ClearFields(){
     $this->title = '';
     $this->description = '';
 }
@@ -34,6 +34,36 @@ private function ClearFields(){
 public function OpenCreateModal(){
     $this->ClearFields();
     $this->modal = true;
+}
+
+public function closeCreateModal(){
+    $this->modal = false;
+}
+
+public function CreateTask(){
+    $this->validate([
+        'title' => 'required',
+        'description' => 'required'
+    ]);
+
+    //dd(Auth::id()); // Verifica el ID del usuario autenticado antes de crear la tarea
+
+// Task::create([
+//     'title' => $this->title,
+//     'description' => $this->description,
+//     'user_id' => Auth::id(),
+// ]);
+
+
+$newTask = new Task();
+$newTask->title = $this->title;
+$newTask->description = $this->description;
+$newTask->user_id = Auth::id();
+//dd($newTask);
+$newTask->save();
+
+    $this->modal = false;
+    $this->ClearFields();
 }
 
 }

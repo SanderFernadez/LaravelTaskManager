@@ -58,27 +58,27 @@
                 <h3 class="text-lg font-semibold text-gray-900">
                     Crear Nueva Tarea
                 </h3>
-                <button type="button" wire:click="closeModal" class="text-gray-400 hover:text-gray-600">
+                <button type="button" wire:click="closeCreateModal" class="text-gray-400 hover:text-gray-600">
                     ✖
                 </button>
             </div>
 
             <!-- Cuerpo del modal -->
-            <form wire:submit.prevent="save">
+            <form  >
                 <div class="p-4">
                     <label class="block text-sm font-medium text-gray-700">Título</label>
-                    <input type="text" wire:model="title" class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-200">
+                    <input type="text" wire:model="title"  id="title"  class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-200">
 
                     <label class="block text-sm font-medium text-gray-700 mt-4">Descripción</label>
-                    <textarea wire:model="description" class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-200"></textarea>
+                    <textarea wire:model="description"  id="description"   class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-200"></textarea>
                 </div>
 
                 <!-- Footer del modal -->
                 <div class="flex justify-end p-4 border-t">
-                    <button type="button" wire:click="closeModal" class="bg-gray-300 px-4 py-2 rounded-md text-sm mr-2">
+                    <button type="button" wire:click="closeCreateModal" class="bg-gray-300 px-4 py-2 rounded-md text-sm mr-2">
                         Cancelar
                     </button>
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
+                    <button wire:click="CreateTask" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
                         Guardar
                     </button>
                 </div>
