@@ -31,10 +31,9 @@
                             <td class="py-4 px-6 text-sm text-gray-700">{{ $task->description }}</td>
                             <td class="py-4 px-6 text-sm text-gray-700">{{ $task->created_at }}</td>
                             <td class="py-4 px-6 text-center">
-                                <a href="#" class="bg-blue-100 text-blue-600 px-3 py-1 rounded-md text-sm mr-2 cursor-not-allowed opacity-50">
-                                    Editar
-                                </a>
-                                <button class="bg-red-100 text-red-600 px-3 py-1 rounded-md text-sm cursor-not-allowed opacity-50">
+                                <button wire:click = "UpdateTask({{$task}})" class="bg-blue-100 text-blue-600 px-3 py-1 rounded-mdtext-sm mr- 2  opacity-50">
+                                    Editar</button>
+                                <button  wire:click="Delete({{$task->id}})" wire:confirm=" Esta seguro de que desea eliminar esta tarea: {{$task->title}}?" class="bg-red-100 text-red-600 px-3 py-1 rounded-md text-sm  opacity-50">
                                     Eliminar
                                 </button>
                             </td>
@@ -58,7 +57,7 @@
                 <h3 class="text-lg font-semibold text-gray-900">
                     Crear Nueva Tarea
                 </h3>
-                <button type="button" wire:click="closeCreateModal" class="text-gray-400 hover:text-gray-600">
+                <button type="button" wire:click.prevent="closeCreateModal" class="text-gray-400 hover:text-gray-600">
                     ✖
                 </button>
             </div>
@@ -75,12 +74,20 @@
 
                 <!-- Footer del modal -->
                 <div class="flex justify-end p-4 border-t">
-                    <button type="button" wire:click="closeCreateModal" class="bg-gray-300 px-4 py-2 rounded-md text-sm mr-2">
+                    <button type="button" wire:click.prevent="closeCreateModal" class="bg-gray-300 px-4 py-2 rounded-md text-sm mr-2">
                         Cancelar
                     </button>
-                    <button wire:click="CreateTask" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
+                    @if ($isEditing)
+                    <button wire:click.prevent="UpdateTaskSave({{$taskId}})" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
+                        Actualizar
+                    </button>
+                @else
+                    <button wire:click.prevent="CreateTask" type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md text-sm">
                         Guardar
                     </button>
+                @endif
+                
+                    
                 </div>
             </form>
         </div>
