@@ -45,8 +45,10 @@
      </div>
 
         
-  
-    
+
+
+        
+
 
 <!-- Modal de Livewire -->
 @if($modal)
