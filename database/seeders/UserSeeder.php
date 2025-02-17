@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -23,6 +22,6 @@ class UserSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'remember_token' => Str::random(10),
         ]);
-    
+
     }
 }

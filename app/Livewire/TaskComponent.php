@@ -3,9 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Task;
-use Livewire\Component;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\Validate;
+use Livewire\Component;
+
 
 class TaskComponent extends Component
 {
@@ -18,9 +19,20 @@ public $taskId;
 public $isEditing = false;
 public $modal = false;
 
-public function mount(){
+public function mount()
+{
+    $user = Auth::user();
 
-    $this->tasks = Task::where('user_id', Auth::id())->get();
+    if (!$user) {
+        $this->tasks = [];
+        return;
+    }
+
+    $normaltasks = Task::where('user_id', $user->id)->get()->toArray();
+    //dd($user);
+    $sharedTasks = $user->sharedTasks()->get()->toArray();
+
+    $this->tasks = array_merge($normaltasks, $sharedTasks);
 }
 
 
@@ -76,7 +88,7 @@ public function UpdateTask(Task $task){
 
     $this->title = $task->title;
     $this->description = $task->description;
-    
+
     $this->taskId = $task->id;
     $this->modal = true;
     $this->isEditing = true;
@@ -90,7 +102,7 @@ public function UpdateTaskSave(int $id){
     //     'title' => 'required',
     //     'description' => 'required'
     // ]);
-  
+
     $task = Task::find($id);
     $task->title = $this->title;
     $task->description = $this->description;
@@ -105,7 +117,7 @@ public function UpdateTaskSave(int $id){
 }
 
 public function Delete(int $id){
-   
+
 $task = Task::find($id);
 if ($task) {
     $task->delete();
